@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tamagotchi.Modifiers;
 
 namespace Tamagotchi
@@ -7,15 +8,19 @@ namespace Tamagotchi
     {
         private State _state;
 
-        private readonly IStateModifier _energyModifier;
+        private readonly IStateModifier _energyDecrementModifierModifier;
 
         private readonly IStateModifier _timeModifier;
 
-        public Tamagotchi(State state, IStateModifier energyModifier, IStateModifier timeModifier)
+        private readonly IDictionary<Food, IStateModifier> _foodReaction;
+
+        public Tamagotchi(State state, IStateModifier energyDecrementModifierModifier, IStateModifier timeModifier,
+            IDictionary<Food, IStateModifier> foodReaction)
         {
             _state = state;
-            _energyModifier = energyModifier;
+            _energyDecrementModifierModifier = energyDecrementModifierModifier;
             _timeModifier = timeModifier;
+            _foodReaction = foodReaction;
         }
 
         public bool IsAlive => _state.LiveTime != 0;
@@ -35,12 +40,13 @@ namespace Tamagotchi
         {
             for (var i = 0; i < time; i++)
             {
-                _state = _energyModifier.Modify(_state);
+                _state = _energyDecrementModifierModifier.Modify(_state);
             }
         }
 
         public void PushFood(Food food)
         {
+            _state = _foodReaction[food].Modify(_state);
             Console.WriteLine("Food  " + food.Name + " is eaten");
         }
     }

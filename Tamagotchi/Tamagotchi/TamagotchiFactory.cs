@@ -1,4 +1,5 @@
-﻿using Tamagotchi.Modifiers;
+﻿using System.Collections.Generic;
+using Tamagotchi.Modifiers;
 
 namespace Tamagotchi
 {
@@ -6,7 +7,10 @@ namespace Tamagotchi
     {
         public Tamagotchi GetNext()
         {
-            return new Tamagotchi(new State(20,100),new EnergyDecrementModifier(), new LifeTimeDecrementModifier());
+            IDictionary<Food,IStateModifier> tmp = new Dictionary<Food, IStateModifier>();
+            tmp.Add(new Food("food1"),new EnergyIncrementModifier());
+            return new Tamagotchi(new State(20, 100), new EnergyDecrementModifier(), new LifeTimeDecrementModifier(),
+                tmp);
         }
     }
 }

@@ -43,6 +43,7 @@
     <Compile Include="Modifiers\EnergyDecrementModifier.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="Food.cs" />
+    <Compile Include="Modifiers\EnergyIncrementModifier.cs" />
     <Compile Include="Modifiers\IStateModifier.cs" />
     <Compile Include="Modifiers\LifeTimeDecrementModifier.cs" />
     <Compile Include="State.cs" />

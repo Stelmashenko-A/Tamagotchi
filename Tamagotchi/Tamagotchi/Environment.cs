@@ -6,7 +6,7 @@ namespace Tamagotchi
     {
         public Food CreateFood()
         {
-            return new Food("fruit");
+            return new Food("food1");
         }
 
 
