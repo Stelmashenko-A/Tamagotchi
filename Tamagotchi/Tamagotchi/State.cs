@@ -2,8 +2,14 @@
 {
     public class State
     {
-        public int LiveTime { get; set; }
+        public State(int liveTime, int energy)
+        {
+            LiveTime = liveTime;
+            Energy = energy;
+        }
 
-        public int Energy { get; set; }
+        public int LiveTime { get; }
+
+        public int Energy { get; }
     }
 }

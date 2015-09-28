@@ -1,25 +1,28 @@
 ﻿using System;
+using Tamagotchi.Modifiers;
 
 namespace Tamagotchi
 {
     public class Tamagotchi
     {
-        private readonly State _state;
+        private State _state;
 
-        public Tamagotchi()
+        private readonly IStateModifier _energyModifier;
+
+        private readonly IStateModifier _timeModifier;
+
+        public Tamagotchi(State state, IStateModifier energyModifier, IStateModifier timeModifier)
         {
-            _state = new State
-            {
-                Energy = 100,
-                LiveTime = 7
-            };
+            _state = state;
+            _energyModifier = energyModifier;
+            _timeModifier = timeModifier;
         }
 
         public bool IsAlive => _state.LiveTime != 0;
 
         public void TimeDec()
         {
-            _state.LiveTime--;
+            _state = _timeModifier.Modify(_state);
         }
 
         public bool CanSurvive(int i)
@@ -28,14 +31,16 @@ namespace Tamagotchi
         }
 
 
-        public void SearchFood(int i)
+        public void SearchFood(int time)
         {
-            _state.Energy -= i;
+            for (var i = 0; i < time; i++)
+            {
+                _state = _energyModifier.Modify(_state);
+            }
         }
 
         public void PushFood(Food food)
         {
-
             Console.WriteLine("Food  " + food.Name + " is eaten");
         }
     }
